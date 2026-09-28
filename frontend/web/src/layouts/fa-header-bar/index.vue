@@ -178,7 +178,7 @@
     <FaWorkTab />
 
     <!-- 通知 -->
-    <FaNotification v-model:value="showNotice" />
+    <FaNotification v-if="showNotice" v-model:value="showNotice" />
   </div>
 </template>
 
@@ -266,7 +266,7 @@ const { isFullscreen, toggle: toggleFullscreen } = useFullscreen();
 onMounted(() => {
   initLanguage();
   document.addEventListener("click", bodyCloseNotice);
-  noticeStore.getNotice();
+  if (import.meta.env.VITE_TOOLBOX_ADMIN !== "true") noticeStore.getNotice();
 });
 
 onUnmounted(() => {

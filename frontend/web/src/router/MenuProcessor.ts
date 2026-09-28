@@ -348,7 +348,7 @@ export function mergeShellRoutesIntoMenu(menuList: AppRouteRecord[]): AppRouteRe
   };
 
   tryPush(mergeShellHomeMenu);
-  if (!paths.has("/dashboard")) {
+  if (import.meta.env.VITE_TOOLBOX_ADMIN !== "true" && !paths.has("/dashboard")) {
     tryPush(dashboardRoutesToShellMenu(getDashboardMenuTreeForMerge()));
   }
 

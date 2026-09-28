@@ -1,0 +1,24 @@
+# Run with: docker compose --env-file .env -f deploy/compose.yaml -f deploy/compose.dev.yaml up -d
+# Run the Vue development server separately: cd frontend/web; npm run dev
+services:
+  api:
+    command: [uvicorn, 'app:create_app', --factory, --host, 0.0.0.0, --port, '8000', --reload, --reload-dir, /srv/backend/app/toolbox, --reload-dir, /srv/backend/plugins]
+    volumes:
+      - ../backend/app/toolbox:/srv/backend/app/toolbox:ro
+      - ../backend/plugins:/srv/backend/plugins:ro
+  worker:
+    volumes: &worker-source
+      - ../backend/app/toolbox:/srv/backend/app/toolbox:ro
+      - ../backend/plugins:/srv/backend/plugins:ro
+      - ../backend/workers:/srv/backend/workers:ro
+  download-worker:
+    volumes: *worker-source
+  provider-worker:
+    volumes: *worker-source
+  dispatcher:
+    volumes: *worker-source
+  search-worker:
+    volumes:
+      - ../backend/app/toolbox:/srv/backend/app/toolbox:ro
+      - ../backend/plugins:/srv/backend/plugins:ro
+      - ../backend/workers:/srv/backend/workers:ro

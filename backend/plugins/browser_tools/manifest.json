@@ -1,0 +1,47 @@
+{
+  "plugin_id": "browser_tools",
+  "version": "1.0.0",
+  "sdk_version": 1,
+  "tools": [
+    {
+      "id": "json.format",
+      "name": "JSON 格式化",
+      "category": "开发工具",
+      "icon": "Braces",
+      "color": "amber",
+      "description": "格式化、校验与压缩，让结构一目了然。",
+      "tags": [
+        "本地处理",
+        "即时"
+      ],
+      "mode": "browser",
+      "note": "内容仅在浏览器中处理，不上传服务器。",
+      "version": "1.0.0",
+      "handler": null,
+      "resource_profile": "browser",
+      "timeout_seconds": 840,
+      "max_output_bytes": 104857600,
+      "schema_ref": null
+    },
+    {
+      "id": "base64.codec",
+      "name": "Base64 编解码",
+      "category": "开发工具",
+      "icon": "Binary",
+      "color": "blue",
+      "description": "支持中文的文本编码和解码，轻松转换。",
+      "tags": [
+        "本地处理",
+        "即时"
+      ],
+      "mode": "browser",
+      "note": "内容仅在浏览器中处理，不上传服务器。",
+      "version": "1.0.0",
+      "handler": null,
+      "resource_profile": "browser",
+      "timeout_seconds": 840,
+      "max_output_bytes": 104857600,
+      "schema_ref": null
+    }
+  ]
+}

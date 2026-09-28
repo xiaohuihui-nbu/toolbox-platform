@@ -23,7 +23,7 @@ export const headerBarConfig: HeaderBarFeatureConfig = {
     description: "页面刷新按钮",
   },
   fastEnter: {
-    enabled: true,
+    enabled: import.meta.env.VITE_TOOLBOX_ADMIN !== "true",
     description: "快速入口功能，提供常用应用和链接的快速访问",
   },
   breadcrumb: {
@@ -39,7 +39,7 @@ export const headerBarConfig: HeaderBarFeatureConfig = {
     description: "全屏切换功能",
   },
   notification: {
-    enabled: true,
+    enabled: import.meta.env.VITE_TOOLBOX_ADMIN !== "true",
     description: "通知中心，显示系统通知和消息",
   },
   language: {

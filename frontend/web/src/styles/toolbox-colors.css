@@ -1,0 +1,123 @@
+/* Color-only reference palette from music-video-downloader.
+   Keep layout, spacing, typography and interactions in the existing styles. */
+:root {
+  --bg: #f4f6f7;
+  --surface: #ffffff;
+  --surface-alt: #edf1f3;
+  --text: #252a34;
+  --muted: #66717d;
+  --border: #dfe5e9;
+  --studio-violet: #6cb8ff;
+}
+:root[data-accent="green"] {
+  --accent: #258164;
+  --accent-hover: #1b6c53;
+  --accent-soft: #e4f3ec;
+}
+:root[data-theme="dark"] {
+  --bg: #101114;
+  --surface: #191b21;
+  --surface-alt: #23262e;
+  --text: #f5f5f7;
+  --muted: #a3a7b4;
+  --border: #2b2e37;
+  --green: #8ce0bd;
+}
+:root[data-theme="dark"][data-accent="green"] {
+  --accent: #8ce0bd;
+  --accent-hover: #a5ebcf;
+}
+:root[data-theme="dark"][data-accent="blue"] {
+  --accent: #6cb8ff;
+  --accent-hover: #98cdff;
+}
+.app-shell {
+  background:
+    radial-gradient(
+      circle at 15% -10%,
+      color-mix(in srgb, var(--accent) 10%, transparent),
+      transparent 38%
+    ),
+    var(--bg);
+}
+.brand-mark {
+  background: linear-gradient(135deg, var(--accent), #6cb8ff);
+  color: #10242b;
+}
+.primary {
+  background: var(--accent);
+  color: #ffffff;
+}
+:root[data-theme="dark"] .primary {
+  color: #101b22;
+}
+.primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+.featured-workspace .hero {
+  background:
+    radial-gradient(ellipse at 90% 0%, #6cb8ff18, transparent 60%),
+    linear-gradient(125deg, #203b38, #19292d 70%);
+  border-color: #39534e;
+}
+.hero-tag,
+.hero p {
+  color: #b6d6ce;
+}
+.hero button {
+  background: #8ce0bd;
+  color: #082218;
+}
+.audio-card {
+  background: linear-gradient(130deg, #293d3b, #233038);
+  border-color: #789d9c55;
+  color: #f5f5f7;
+}
+.audio-icon {
+  background: #8ce0bd20;
+  color: #9ce4c9;
+}
+.audio-card small,
+.audio-card-bottom,
+.audio-dots {
+  color: #bbd0ce;
+}
+.waveform i {
+  background: linear-gradient(#8ce0bd, #6cb8ff);
+}
+.audio-play {
+  background: #8ce0bd;
+  color: #16302d;
+}
+.floating-note {
+  background: #6cb8ff15;
+  color: #c4e4df;
+  border-color: #8ce0bd30;
+}
+.note-two {
+  color: #c4e4df;
+}
+.orbit {
+  border-color: #8ce0bd1a;
+}
+.film-frame {
+  background: linear-gradient(145deg, #283b3d, #20313e);
+  border-color: #72bba955;
+  color: #a3dddc;
+}
+.film-frame.front {
+  background: linear-gradient(145deg, #315950, #29444c);
+  border-color: #8ce0bd55;
+}
+.progress-track i {
+  background: linear-gradient(90deg, var(--accent), #6cb8ff);
+}
+:root[data-theme="dark"] input,
+:root[data-theme="dark"] textarea,
+:root[data-theme="dark"] select {
+  background-color: #111217;
+}
+:root[data-theme="dark"] .search-field input,
+:root[data-theme="dark"] .task-search input {
+  background-color: transparent;
+}

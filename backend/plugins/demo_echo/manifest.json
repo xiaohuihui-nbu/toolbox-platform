@@ -1,0 +1,27 @@
+{
+  "plugin_id": "demo_echo",
+  "version": "1.0.0",
+  "sdk_version": 1,
+  "tools": [
+    {
+      "id": "text.export",
+      "name": "文本导出",
+      "category": "文本工具",
+      "icon": "FileText",
+      "color": "green",
+      "description": "将随手记录的内容保存为 UTF-8 文本文件。",
+      "tags": [
+        "UTF-8",
+        "文件中心"
+      ],
+      "mode": "job",
+      "note": "用于验证插件、队列、任务与对象存储的完整执行链路。",
+      "version": "1.0.0",
+      "handler": "plugins.demo_echo.handler:execute",
+      "resource_profile": "media_cpu",
+      "timeout_seconds": 840,
+      "max_output_bytes": 104857600,
+      "schema_ref": "app.toolbox.schemas.tools:TextInput"
+    }
+  ]
+}

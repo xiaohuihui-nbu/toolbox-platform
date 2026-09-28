@@ -27,6 +27,9 @@ _SENSITIVE_KEYS: set[str] = {
     "secret",
     "client_secret",
     "secret_key",
+    "current_password",
+    "new_password",
+    "old_password",
     "authorization",
 }
 _REDACTED = "******"
@@ -116,7 +119,7 @@ class OperationLogRoute(APIRoute):
                     response_data = b"{}"
 
                 log_data: OperationLogRecord = {
-                    "username": str(getattr(getattr(request.state, "ctx", None), "user_username", None) or "unknown"),
+                    "username": str(getattr(request.state, "toolbox_username", None) or getattr(getattr(request.state, "ctx", None), "user_username", None) or "unknown"),
                     "request_path": request.url.path,
                     "request_method": request.method,
                     "request_payload": log_payload,

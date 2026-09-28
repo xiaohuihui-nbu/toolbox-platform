@@ -1,5 +1,5 @@
 import type { App } from "vue";
-import { createPinia } from "pinia";
+import { createPlatformStore } from "./platform";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import { router } from "@/router";
 import { refreshMenuAndRoutes } from "@/router/refresh";
@@ -9,7 +9,7 @@ import { useNoticeStore } from "./modules/notice.store";
 import { useConfigStore } from "./modules/config.store";
 import { useWorktabStore } from "./modules/worktab.store";
 
-const store = createPinia();
+const store = createPlatformStore();
 
 store.use(piniaPluginPersistedstate);
 
@@ -63,7 +63,7 @@ export async function refreshAppCaches(opts: RefreshCacheOptions = {}) {
   if (refreshConfig) {
     tasks.push(configStore.getConfig(true));
   }
-  if (refreshNotice) {
+  if (refreshNotice && import.meta.env.VITE_TOOLBOX_ADMIN !== "true") {
     tasks.push(noticeStore.getNotice(true));
   }
   if (dictTypes && dictTypes.length > 0) {

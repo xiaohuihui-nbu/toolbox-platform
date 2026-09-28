@@ -19,7 +19,7 @@ export function useAppBootstrap() {
     checkStorageCompatibility();
     toggleTransition(false);
     systemUpgrade();
-    startVersionPolling();
+    if (import.meta.env.VITE_TOOLBOX_ADMIN !== "true") startVersionPolling();
     initSiteConfig();
   };
 

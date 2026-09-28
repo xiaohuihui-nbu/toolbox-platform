@@ -6,14 +6,14 @@
  * 在 vite 插件模式下，tailwindcss vite 插件已会自动扫描所有 CSS 文件。
  * 注释内不能出现连续的星号斜杠（避免 CSS 解析器提前关闭注释）。
  */
-@source "../../**/*.vue";
-@source "../../**/*.ts";
-@source "../../**/*.tsx";
-@source "../../**/*.js";
-@source "../../**/*.jsx";
-@source "../../**/*.html";
-@source "../../**/*.scss";
-@source "../../**/*.css";
+@source "../**/*.vue";
+@source "../**/*.ts";
+@source "../**/*.tsx";
+@source "../**/*.js";
+@source "../**/*.jsx";
+@source "../../admin.html";
+@source "../**/*.scss";
+@source "../**/*.css";
 
 /* ==================== Tailwind Theme Configuration ==================== */
 @theme {

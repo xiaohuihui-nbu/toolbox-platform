@@ -37,6 +37,9 @@ class Settings(BaseSettings):
     # ******************* API文档配置 ****************** #
     # ================================================= #
     DEBUG: bool = True  # 调试模式
+    TOOLBOX_ENABLED: bool = False  # 工具箱扩展装配，不启动未使用的 AI/调度模块
+    AUTH_COOKIE_NAME: str = ""  # 可选 HttpOnly JWT cookie，复用同一认证会话
+    HTTPS_REDIRECT: bool = True
     TITLE: str = "🎉 FastapiAdmin 🎉 "  # 文档标题
     VERSION: str = "3.0.0"  # 版本号
     DESCRIPTION: str = "一个基于fastapi、sqlalchemy、redis实现的轻量化框架"  # 文档描述
@@ -260,7 +263,7 @@ class Settings(BaseSettings):
     @property
     def MIDDLEWARE_LIST(self) -> list[str | None]:
         MIDDLEWARES: list[str | None] = [
-            "app.core.middlewares.CustomHTTPSRedirectMiddleware" if self.ENVIRONMENT == EnvironmentEnum.PROD else None,
+            "app.core.middlewares.CustomHTTPSRedirectMiddleware" if self.ENVIRONMENT == EnvironmentEnum.PROD and self.HTTPS_REDIRECT else None,
             "app.core.middlewares.CustomTrustedHostMiddleware" if self.ENVIRONMENT == EnvironmentEnum.PROD else None,
             "app.core.middlewares.CustomCORSMiddleware",
             "app.core.middlewares.RequestLogMiddleware",

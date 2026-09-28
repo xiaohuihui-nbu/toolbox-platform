@@ -10,7 +10,7 @@
       :validate-on-rule-change="false"
       @keyup.enter="$emit('submit')"
     >
-      <ElFormItem>
+      <ElFormItem v-if="!toolboxAdmin">
         <ElSelect
           :model-value="demoAccountKey"
           class="custom-height w-full"
@@ -61,7 +61,7 @@
       </ElTooltip>
 
       <div class="login-form-tail flex flex-col gap-[1.1rem]">
-        <div class="relative pb-3">
+        <div v-if="!toolboxAdmin" class="relative pb-3">
           <div
             class="relative z-2 overflow-hidden select-none rounded-lg border border-transparent transition duration-300"
             :class="{ 'border-[#FF4E4F]!': !isPassing && isClickPass }"
@@ -85,7 +85,7 @@
           </p>
         </div>
 
-        <div class="login-options-row flex items-center justify-between text-sm">
+        <div v-if="!toolboxAdmin" class="login-options-row flex items-center justify-between text-sm">
           <ElCheckbox v-model="loginForm.remember" class="login-remember">
             {{ $t("login.rememberPwd") }}
           </ElCheckbox>
@@ -111,7 +111,7 @@
           </ElButton>
         </div>
 
-        <div class="login-secondary-actions grid grid-cols-2 gap-2">
+        <div v-if="!toolboxAdmin" class="login-secondary-actions grid grid-cols-2 gap-2">
           <ElButton class="login-secondary-btn" plain @click="$emit('openMobile')">
             {{ $t("login.mobileLogin") }}
           </ElButton>
@@ -122,9 +122,9 @@
       </div>
     </ElForm>
 
-    <FaLoginThirdPartySection @oauth="$emit('oauth', $event)" />
+    <FaLoginThirdPartySection v-if="!toolboxAdmin" @oauth="$emit('oauth', $event)" />
 
-    <FaLoginAuthLinkRow
+    <FaLoginAuthLinkRow v-if="!toolboxAdmin"
       :hint="$t('login.noAccount')"
       :link-text="$t('login.register')"
       @link="$emit('register')"
@@ -138,6 +138,7 @@ import type { CaptchaInfo, LoginFormData } from "@/api/module_system/auth";
 import type { FormRules } from "element-plus";
 import type { Account, AccountKey } from "@views/module_system/auth/login/types";
 
+const toolboxAdmin = import.meta.env.VITE_TOOLBOX_ADMIN === "true";
 const loginForm = defineModel<LoginFormData>("loginForm", { required: true });
 
 defineOptions({ name: "FaLoginAccountForm" });

@@ -1,0 +1,29 @@
+# Isolated DB + Redis + bucket; run services with --no-deps, never compose up this overlay.
+services:
+  bootstrap:
+    environment: &rehearsal
+      DATABASE_NAME: toolbox_identity_rehearsal
+      TB_DATABASE_URL: mysql+pymysql://toolbox:${DB_PASSWORD}@mysql:3306/toolbox_identity_rehearsal?charset=utf8mb4
+      REDIS_DB_NAME: '2'
+      TB_REDIS_URL: redis://redis:6379/2
+      TB_S3_BUCKET: toolbox-identity-rehearsal
+  worker:
+    environment: *rehearsal
+  download-worker:
+    environment:
+      <<: *rehearsal
+      TB_RESOURCE_PROFILE: download
+  provider-worker:
+    environment:
+      <<: *rehearsal
+      TB_RESOURCE_PROFILE: provider_io
+  dispatcher:
+    environment: *rehearsal
+  api:
+    ports: ['127.0.0.1:18992:8000']
+    environment:
+      DATABASE_NAME: toolbox_identity_rehearsal
+      TB_DATABASE_URL: mysql+pymysql://toolbox:${DB_PASSWORD}@mysql:3306/toolbox_identity_rehearsal?charset=utf8mb4
+      REDIS_DB_NAME: '2'
+      TB_REDIS_URL: redis://redis:6379/2
+      TB_S3_BUCKET: toolbox-identity-rehearsal

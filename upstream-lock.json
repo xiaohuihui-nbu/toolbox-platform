@@ -1,0 +1,66 @@
+{
+  "repository": "https://github.com/fastapiadmin/FastapiAdmin",
+  "commit": "1cd12c726ad9032c17ef85ce805ce991be60fbdf",
+  "license": "MIT",
+  "product_layer": "backend/app/toolbox + backend/plugins + backend/workers + frontend/web/src/views/toolbox",
+  "runtime_reuse": [
+    "backend/app/__init__.py:create_app",
+    "backend/app/config/setting.py",
+    "backend/app/core/base_model.py",
+    "backend/app/core/dependencies.py",
+    "backend/app/core/security.py",
+    "backend/app/core/router_class.py:OperationLogRoute",
+    "backend/app/modules/system/auth",
+    "backend/app/modules/system/user",
+    "backend/app/modules/system/role",
+    "backend/app/modules/system/menu",
+    "backend/app/modules/system/log",
+    "backend/app/alembic",
+    "backend/app/utils/password_util.py",
+    "frontend/web/src/store/platform.ts (shared Pinia entry)",
+    "Vue Router / Pinia / Element Plus native ecosystem",
+    "backend/app/modules/system/dept",
+    "backend/app/modules/system/position",
+    "backend/app/modules/system/dict",
+    "frontend/web/src/main.admin.ts",
+    "frontend/web/src/layouts",
+    "frontend/web/src/views/module_system/{user,role,menu,dept,position,dict,log}"
+  ],
+  "notes": "Toolbox extends the upstream application factory, identity, JWT/Redis, RBAC and audit. The native FastapiAdmin Vue layout and seven system management views are published separately at /admin/, sharing HttpOnly authentication with the preserved toolbox workspace. tb_users_legacy is a migration snapshot only.",
+  "plugins": [
+    {
+      "id": "audio_convert",
+      "version": "1.0.0",
+      "sdk_version": 1,
+      "source": "backend/plugins/audio_convert/manifest.json"
+    },
+    {
+      "id": "browser_tools",
+      "version": "1.0.0",
+      "sdk_version": 1,
+      "source": "backend/plugins/browser_tools/manifest.json"
+    },
+    {
+      "id": "demo_echo",
+      "version": "1.0.0",
+      "sdk_version": 1,
+      "source": "backend/plugins/demo_echo/manifest.json"
+    },
+    {
+      "id": "tts",
+      "version": "1.0.0",
+      "sdk_version": 1,
+      "source": "backend/plugins/tts/manifest.json"
+    },
+    {
+      "id": "video_download",
+      "version": "1.0.0",
+      "sdk_version": 1,
+      "source": "backend/plugins/video_download/manifest.json"
+    }
+  ],
+  "database_revision": "tb_0003_execution",
+  "model_source": {
+    "gptsovits": "External existing deployment; model versions are managed by its operator, not fabricated in this lock file."
+  }
+}

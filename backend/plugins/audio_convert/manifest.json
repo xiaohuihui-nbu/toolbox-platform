@@ -1,0 +1,27 @@
+{
+  "plugin_id": "audio_convert",
+  "version": "1.0.0",
+  "sdk_version": 1,
+  "tools": [
+    {
+      "id": "audio.extract",
+      "name": "音频提取",
+      "category": "音频工具",
+      "icon": "Music2",
+      "color": "violet",
+      "description": "从音视频中提取音轨，转换为 MP3 文件。",
+      "tags": [
+        "FFmpeg",
+        "MP3"
+      ],
+      "mode": "job",
+      "note": "支持常见音视频文件，单文件最大 100 MB。",
+      "version": "1.0.0",
+      "handler": "plugins.audio_convert.handler:execute",
+      "resource_profile": "media_cpu",
+      "timeout_seconds": 840,
+      "max_output_bytes": 104857600,
+      "schema_ref": "app.toolbox.schemas.tools:MediaInput"
+    }
+  ]
+}

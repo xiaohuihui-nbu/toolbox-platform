@@ -142,10 +142,10 @@ class LoginService:
         menu_ids: list[int] = []
         if not user.is_superuser and hasattr(user, "roles"):
             for role in user.roles:
-                if role and role.status == 0:
+                if role and role.status == 0 and not role.is_deleted:
                     if hasattr(role, "menus"):
                         for menu in role.menus:
-                            if menu and menu.status == 0:
+                            if menu and menu.status == 0 and not menu.is_deleted:
                                 menu_ids.append(menu.id)
                                 if menu.permission:
                                     permissions.append(menu.permission)

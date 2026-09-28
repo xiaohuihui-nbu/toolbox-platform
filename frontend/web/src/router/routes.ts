@@ -22,7 +22,7 @@ import Exception401 from "@views/exception/401/index.vue";
 import Exception403 from "@views/exception/403/index.vue";
 import Exception404 from "@views/exception/404/index.vue";
 import Exception500 from "@views/exception/500/index.vue";
-import DashboardHome from "@views/dashboard/home/index.vue";
+import DashboardHome from "@views/admin/Home.vue";
 import FastlinkProfile from "@views/fastlink/current/profile.vue";
 import FastlinkChangelog from "@views/fastlink/changelog/index.vue";
 import FastlinkPricing from "@views/fastlink/pricing/index.vue";

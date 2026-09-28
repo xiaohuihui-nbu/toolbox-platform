@@ -43,6 +43,10 @@ class CustomOAuth2PasswordBearer(OAuth2PasswordBearer):
         - CustomException: 认证失败时抛出,状态码为401。
         """
         authorization = request.headers.get("Authorization")
+        if not authorization and settings.AUTH_COOKIE_NAME:
+            cookie = request.cookies.get(settings.AUTH_COOKIE_NAME)
+            if cookie:
+                authorization = f"Bearer {cookie}"
         scheme, token = get_authorization_scheme_param(authorization)
 
         if not authorization or scheme.lower() != settings.TOKEN_TYPE.lower():

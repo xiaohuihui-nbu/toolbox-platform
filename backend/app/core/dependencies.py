@@ -41,7 +41,7 @@ async def redis_getter(request: Request) -> Redis:
 
 
 async def get_current_user(
-    db: AsyncSession = Depends(db_getter),
+    db: AsyncSession = Depends(db_getter, scope="function"),
     redis: Redis = Depends(redis_getter),
     token: str = Depends(OAuth2Schema),
 ) -> AuthSchema:
@@ -170,22 +170,29 @@ async def _authenticate(
 
     # 每请求查库校验用户仍存在且未删除：token 只证明签发时身份，不证明现在。
     from app.modules.system.user.model import UserModel  # 延迟导入：core 导入期不依赖业务层（守卫不变式 3）
+    from sqlalchemy.orm import selectinload
+    from app.modules.system.role.model import RoleModel
+    from app.modules.system.auth.service import LoginService
 
     user_obj = (
         (
-            await db.execute(select(UserModel).where(UserModel.id == user_id, UserModel.is_deleted == False))  # noqa: E712
+            await db.execute(select(UserModel).where(UserModel.id == user_id, UserModel.is_deleted == False).options(  # noqa: E712
+                selectinload(UserModel.roles).selectinload(RoleModel.menus)))
         )
         .scalars()
         .first()
     )
     if not user_obj:
         raise CustomException(msg="用户不存在", code=RET.NOT_FOUND.code, status_code=401)
+    if user_obj.status != 0:
+        raise CustomException(msg="用户已被停用", code=RET.UNAUTHORIZED.code, status_code=401)
 
     user = CoreUserSchema.model_validate(user_obj)
+    permissions, menu_ids = LoginService._collect_permissions(user_obj)
     return AuthSchema(
         user=user,
-        permissions=user_info.get("permissions", []),
-        menu_ids=user_info.get("menu_ids", []),
+        permissions=permissions,
+        menu_ids=menu_ids,
     )
 
 

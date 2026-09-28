@@ -17,6 +17,8 @@ from app.utils.import_util import ImportUtil
 ALEMBIC_VERSION_DIR.mkdir(parents=True, exist_ok=True)
 
 ImportUtil.find_models(MappedBase)
+if settings.TOOLBOX_ENABLED:
+    from app.toolbox.models import entities
 
 alembic_config = context.config
 
@@ -58,7 +60,7 @@ def run_migrations_online() -> None:
         await connectable.dispose()
 
     def do_run_migrations(connection: Connection) -> None:
-        if connection.dialect.name == "mysql":
+        if connection.dialect.name == "mysql" and not settings.TOOLBOX_ENABLED:
             connection.execute(text("SET FOREIGN_KEY_CHECKS=0"))
 
         def process_revision_directives(

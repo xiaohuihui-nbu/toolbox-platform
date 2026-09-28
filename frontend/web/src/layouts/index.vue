@@ -63,7 +63,7 @@ const userStore = useUserStore();
 const enableAiAssistant = computed(() => {
   const isEnabled = settingStore.userEnableAi;
   const isLoggedIn = userStore.basicInfo && Object.keys(userStore.basicInfo).length > 0;
-  return isEnabled && isLoggedIn;
+  return import.meta.env.VITE_TOOLBOX_ADMIN !== "true" && isEnabled && isLoggedIn;
 });
 
 /** 新手指引显隐 —— session 级状态，首次登录/注册后自动弹出 */

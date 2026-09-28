@@ -19,6 +19,11 @@ from .utils.console import console_end, console_start
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[Any, Any]:
+    if settings.TOOLBOX_ENABLED:
+        from app.toolbox.integration import toolbox_lifespan
+        async with toolbox_lifespan(app):
+            yield
+        return
     from app.core.ap_scheduler import SchedulerUtil
     from app.core.database import async_engine
     from app.core.redis_crud import redis_connect
@@ -79,6 +84,10 @@ def register_exceptions(app: FastAPI) -> None:
 
 
 def register_routers(app: FastAPI) -> None:
+    if settings.TOOLBOX_ENABLED:
+        from app.toolbox.integration import register_toolbox
+        register_toolbox(app)
+        return
     from app.api.v1.routers import api_v1
     app.include_router(api_v1)
 
@@ -137,7 +146,10 @@ def create_app() -> FastAPI:
     """
 
     # 创建FastAPI应用
-    app = FastAPI(**settings.FASTAPI_CONFIG, lifespan=lifespan)
+    options = dict(settings.FASTAPI_CONFIG)
+    if settings.TOOLBOX_ENABLED:
+        options.update(root_path="", openapi_url="/api/openapi.json")
+    app = FastAPI(**options, lifespan=lifespan)
     # 注册异常处理器
     register_exceptions(app)
     # 注册中间件

@@ -479,6 +479,7 @@ function setupAccount(key: AccountKey) {
 }
 
 async function getCaptcha() {
+  if (import.meta.env.VITE_TOOLBOX_ADMIN === "true") return;
   try {
     codeLoading.value = true;
     const response = await AuthAPI.getCaptcha();
@@ -548,7 +549,7 @@ const showVoteNotification = () => {
 let voteTimer: ReturnType<typeof setTimeout> | null = null;
 
 onMounted(async () => {
-  setupAccount("super");
+  if (import.meta.env.VITE_TOOLBOX_ADMIN !== "true") setupAccount("super");
   await configStore.getConfig(true);
   await tryConsumeOAuthCallback();
   if (userStore.isLogin) {
@@ -556,7 +557,7 @@ onMounted(async () => {
     return;
   }
   getCaptcha();
-  voteTimer = setTimeout(showVoteNotification, 500);
+  if (import.meta.env.VITE_TOOLBOX_ADMIN !== "true") voteTimer = setTimeout(showVoteNotification, 500);
 });
 
 onActivated(() => {
@@ -585,7 +586,7 @@ const handleSubmit = async () => {
     const valid = await accountFormRef.value.validate?.();
     if (!valid) return;
 
-    if (!isPassing.value) {
+    if (import.meta.env.VITE_TOOLBOX_ADMIN !== "true" && !isPassing.value) {
       isClickPass.value = true;
       return;
     }
@@ -595,7 +596,7 @@ const handleSubmit = async () => {
     await userStore.login(loginForm);
     await router.replace(resolveRedirectTarget(route.query));
 
-    if (settingStore.showGuide) {
+    if (settingStore.showGuide && import.meta.env.VITE_TOOLBOX_ADMIN !== "true") {
       appStore.showGuide(true);
     }
   } catch (error) {

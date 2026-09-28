@@ -21,7 +21,10 @@ import {
 // ──────── ComponentLoader ────────
 
 /** 页面组件映射表（eager 加载：src/views 及 layouts 下所有 .vue 文件） */
-const pageComponents = import.meta.glob("/src/{views,layouts}/**/*.vue", { eager: true });
+const pageComponents = import.meta.glob([
+  "/src/views/module_system/{user,role,menu,dept,position,log,dict}/**/*.vue",
+  "/src/views/admin/**/*.vue", "/src/layouts/index.vue"
+], { eager: true });
 
 /**
  * 组件加载器
@@ -36,7 +39,8 @@ export class ComponentLoader {
     if (!path) return { render: () => null };
 
     // 标准化路径：移除开头的 /
-    const normalizedPath = path.startsWith("/") ? path.slice(1) : path;
+    let normalizedPath = path.startsWith("/") ? path.slice(1) : path;
+    if (normalizedPath === "toolbox/Workspace") normalizedPath = "admin/ToolboxLink";
 
     const lookupPaths = [`/src/views/${normalizedPath}`, `/src/views/${normalizedPath}.vue`];
     for (const p of lookupPaths) {

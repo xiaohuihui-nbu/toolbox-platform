@@ -41,7 +41,15 @@ logs
 *.sqlite3
 
 # 前端工程（后端镜像不需要）
-frontend
+frontend/*
+!frontend/web
+frontend/web/*
+!frontend/web/dist
+frontend/web/node_modules
+.env*
+**/.venv
+**/node_modules
+artifacts
 
 # 部署脚本
 deploy.sh

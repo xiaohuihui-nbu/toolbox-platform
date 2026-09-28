@@ -74,3 +74,8 @@ AGENTS.md
 .codebuddy
 .agent
 .workbuddy
+
+# Toolbox local deployment secrets and verification artifacts
+.env
+.env.*.local
+artifacts/

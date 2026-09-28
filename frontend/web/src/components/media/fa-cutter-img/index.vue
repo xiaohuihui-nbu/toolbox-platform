@@ -66,7 +66,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from "vue";
 import ImgCutter from "vue-img-cutter";
-import "vue-img-cutter/vue-img-cutter.css";
 
 defineOptions({ name: "FaCutterImg" });
 

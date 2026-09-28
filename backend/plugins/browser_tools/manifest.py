@@ -1,0 +1,28 @@
+TOOLS = [
+    {
+        "id": "json.format",
+        "name": "JSON 格式化",
+        "category": "开发工具",
+        "icon": "Braces",
+        "color": "amber",
+        "description": "格式化、校验与压缩，让结构一目了然。",
+        "tags": ["本地处理", "即时"],
+        "mode": "browser",
+        "handler": None,
+        "schema": None,
+        "note": "内容仅在浏览器中处理，不上传服务器。",
+    },
+    {
+        "id": "base64.codec",
+        "name": "Base64 编解码",
+        "category": "开发工具",
+        "icon": "Binary",
+        "color": "blue",
+        "description": "支持中文的文本编码和解码，轻松转换。",
+        "tags": ["本地处理", "即时"],
+        "mode": "browser",
+        "handler": None,
+        "schema": None,
+        "note": "内容仅在浏览器中处理，不上传服务器。",
+    },
+]

@@ -17,11 +17,15 @@ const AUTH_KEYS = {
 } as const;
 
 export class Auth {
+  static cookieMode = import.meta.env.VITE_TOOLBOX_ADMIN === "true";
+  static cookieAuthenticated = false;
   static isLoggedIn(): boolean {
+    if (Auth.cookieMode) return Auth.cookieAuthenticated;
     return !!Auth.getAccessToken();
   }
 
   static getAccessToken(): string {
+    if (Auth.cookieMode) return "";
     const isRememberMe = Auth.getRememberMe();
     return isRememberMe
       ? localStorage.getItem(AUTH_KEYS.ACCESS_TOKEN) || ""
@@ -29,6 +33,7 @@ export class Auth {
   }
 
   static getRefreshToken(): string {
+    if (Auth.cookieMode) return "";
     const isRememberMe = Auth.getRememberMe();
     return isRememberMe
       ? localStorage.getItem(AUTH_KEYS.REFRESH_TOKEN) || ""
@@ -50,6 +55,7 @@ export class Auth {
   }
 
   static clearAuth(): void {
+    Auth.cookieAuthenticated = false;
     localStorage.removeItem(AUTH_KEYS.ACCESS_TOKEN);
     localStorage.removeItem(AUTH_KEYS.REFRESH_TOKEN);
     sessionStorage.removeItem(AUTH_KEYS.ACCESS_TOKEN);

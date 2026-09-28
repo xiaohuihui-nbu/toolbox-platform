@@ -234,6 +234,18 @@ export const useUserStore = defineStore(
      * 登录
      */
     async function login(loginForm: LoginFormData) {
+      if (Auth.cookieMode) {
+        const response = await fetch('/api/v1/toolbox/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: loginForm.username, password: loginForm.password }) });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.detail || data.msg || '登录失败');
+        if (!data.is_admin) { window.location.assign('/#/home'); return; }
+        resetRouteInitState();
+        Auth.cookieAuthenticated = true;
+        await getUserInfo();
+        await useConfigStore().getConfig(true);
+        setLoginStatus(true);
+        return;
+      }
       const response = await AuthAPI.login(loginForm);
       const data = response.data.data;
       if (response.data.code === ResultEnum.SUCCESS) {
@@ -265,6 +277,10 @@ export const useUserStore = defineStore(
      * 登出：有 token 时请求后端；统一清理状态；默认跳转登录页并带 redirect
      */
     async function logout(options?: LogoutOptions) {
+      if (Auth.cookieMode) {
+        const response = await fetch('/api/v1/toolbox/auth/logout', { method: 'POST' });
+        if (!response.ok) throw new Error('退出失败，请重试');
+      }
       const shouldNavigate = options?.navigate !== false;
 
       const ui = info.value as UserInfoLike;
